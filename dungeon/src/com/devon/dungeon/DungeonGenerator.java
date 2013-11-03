@@ -28,10 +28,9 @@ public class DungeonGenerator extends JPanel
 	public static final int MAX_ROOM_SIZE = 25;
 
 	public static final int FLOOR = 1;  //used for cellular automata
-	public static final int GRASS = 2;
+	public static final int DOOR = 2;
 	public static final int CORRIDOR = 3;
-	public static final int DOOR = 4;
-	public static final int WATER = 5;
+
 
 	private static int[][] map;
 	private static int numCols;
@@ -162,11 +161,7 @@ public class DungeonGenerator extends JPanel
 					g.setColor(Color.orange);
 
 				}
-				else if(tileValue == WATER)
-				{
-					g.setColor(Color.BLUE);
 
-				}
 				else if(tileValue == DOOR)
 				{
 					g.setColor(Color.PINK);

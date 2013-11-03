@@ -40,6 +40,7 @@ public class GameScreen extends AbstractScreen
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		camera.update();*/
 		renderer.setView(camera);
+		//render tiles
 		renderer.render();
 	
 		batch.begin();
