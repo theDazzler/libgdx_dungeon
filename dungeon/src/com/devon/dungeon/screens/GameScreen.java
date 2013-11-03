@@ -1,4 +1,4 @@
-package com.devon.dungeon;
+package com.devon.dungeon.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -10,64 +10,87 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.devon.dungeon.Dungeon;
+import com.devon.dungeon.DungeonGenerator;
+import com.devon.dungeon.InputHandler;
+import com.devon.dungeon.MyGdxGame;
+import com.devon.dungeon.Player;
 
-public class GameScreen implements Screen
+public class GameScreen extends AbstractScreen
 {
-	private MyGdxGame game;
-	private TiledMap dungeon;
+	private Dungeon dungeon;
 	private TiledMapRenderer renderer;
 	private OrthographicCamera camera;
-	private AssetManager assetManager;
-	private BitmapFont font;
-	private SpriteBatch batch;
+	private Player player;
+	private InputHandler input;
 	
-	public GameScreen(MyGdxGame game)
+	public GameScreen(MyGdxGame game) 
 	{
-		this.game = game;
+		super(game);
+		
 	}
 
 	@Override
 	public void render(float delta) 
 	{
+		super.render(delta);
+		camera.update();
+		/*
 		Gdx.gl.glClearColor(100f / 255f, 100f / 255f, 250f / 255f, 1f);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		camera.update();
+		camera.update();*/
 		renderer.setView(camera);
 		renderer.render();
+	
 		batch.begin();
 		font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 10, 20); 
 		font.draw(batch, "camera: " + camera.position, 10, 50); 
+		font.draw(batch, "Stage:" + this.stage.getCamera().position, 10, 80);
 		batch.end();
+		
+		//update and render stage actors
+		stage.act(delta);
+        stage.draw();
+        
+        
 		
 	}
 
 	@Override
 	public void resize(int width, int height)
 	{
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
 	public void show() 
 	{
-		Gdx.graphics.setDisplayMode(1700, 960, false);
+		//Gdx.graphics.setDisplayMode(1700, 960, false);
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
+
+		this.camera = new OrthographicCamera(w, h);
 		
-		System.out.println(w);
+		this.camera.setToOrtho(true, w, h);
+		this.stage.setCamera(this.camera);
 		
-		camera = new OrthographicCamera();
-		camera.setToOrtho(true, w, h);
-		camera.update();
-		
-	
-		font = new BitmapFont();
-		batch = new SpriteBatch();
-		
+
+
+		this.input = new InputHandler(this.camera);
+		Gdx.input.setInputProcessor(this.input);
+
+
 		dungeon = new Dungeon(DungeonGenerator.generateDungeonMap());
 
 		renderer = new OrthogonalTiledMapRenderer(dungeon);
+		
+		this.player = new Player(dungeon);
+		this.stage.addActor(this.player);
+		
+		camera.position.set(0f, 0f, 0f);
+		
+		
 		
 	}
 

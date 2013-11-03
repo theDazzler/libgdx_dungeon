@@ -12,6 +12,8 @@ public class Dungeon extends TiledMap
 {
 	private TiledMapTileLayer tileLayer;
 	private int width, height;
+	
+
 	private Texture tileLayerTexture;
 	private int[][] noiseMap;
 
@@ -46,6 +48,19 @@ public class Dungeon extends TiledMap
 		
 	}
 	
+	public int getWidth() {
+		return this.width;
+	}
+
+	public int getHeight() {
+		return this.height;
+	}
+	
+	public int[][] getMap()
+	{
+		return this.noiseMap;
+	}
+	
 	private void initDungeon()
 	{
 		MapLayers layers = this.getLayers();
@@ -58,22 +73,28 @@ public class Dungeon extends TiledMap
 				
 				Cell cell = new Cell();
 				
-				if(tileType == Tile.floor.getId())
+				//empty
+				if(tileType == 0)
 				{
-					cell.setTile(Tile.floor);
 					
 				}
-				else if(tileType == Tile.grass.getId())
+				
+				else if(tileType == Tile.floor.getId())
 				{
-					cell.setTile(Tile.grass);
-					
+					cell.setTile(Tile.floor);
+					this.tileLayer.setCell(x, y, cell);
+				}
+				else if(tileType == Tile.door.getId())
+				{
+					cell.setTile(Tile.door);
+					this.tileLayer.setCell(x, y, cell);
 				}
 				else if(tileType == Tile.corridor.getId())
 				{
 					cell.setTile(Tile.corridor);
-					
+					this.tileLayer.setCell(x, y, cell);
 				}
-				this.tileLayer.setCell(x, y, cell);
+				
 			}
 		}
 		

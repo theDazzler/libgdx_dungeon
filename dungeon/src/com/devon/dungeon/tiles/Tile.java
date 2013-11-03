@@ -29,7 +29,7 @@ public abstract class Tile extends StaticTiledMapTile
 
 	//grass tile has id of 1 and its sprite image has indices 0,0 in spritesheet(top left)
 	public static Tile floor = new FloorTile(1, 0, 0);
-	public static Tile grass = new GrassTile(2, 0, 1);
+	public static Tile door = new DoorTile(2, 0, 1);
 	public static Tile corridor = new CorridorTile(3, 0, 2);
 	
 	private int id;
@@ -52,8 +52,8 @@ public abstract class Tile extends StaticTiledMapTile
 
 	public static Tile getTile(int type)
 	{		
-		if(type == Tile.grass.getId())
-			return Tile.grass;
+		if(type == Tile.door.getId())
+			return Tile.door;
 		else
 			return null;
 	}

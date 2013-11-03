@@ -8,8 +8,8 @@ public class Main {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "dungeon";
 		cfg.useGL20 = false;
-		cfg.width = 480;
-		cfg.height = 320;
+		cfg.width = 960;
+		cfg.height = 720;
 		
 		new LwjglApplication(new MyGdxGame(), cfg);
 	}

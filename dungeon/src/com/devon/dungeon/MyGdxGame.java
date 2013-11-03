@@ -18,6 +18,7 @@ package com.devon.dungeon;
 
 
 import com.badlogic.gdx.Game;
+import com.devon.dungeon.screens.GameScreen;
 
 public class MyGdxGame extends Game 
 {
