@@ -7,7 +7,7 @@ import com.devon.dungeon.tiles.Tile;
 
 public class Graphics 
 {
-	public static final String TILES_GFX_LOCATION = "data/tiles/tiles2.png";
+	public static final String TILES_GFX_LOCATION = "data/tiles/tiles.png";
 	public static final String SPRITES_GFX_LOCATION = "data/sprites/sprites.png";
 	public static final Texture TILES_TEXTURE = new Texture(Gdx.files.internal(TILES_GFX_LOCATION));
 	
