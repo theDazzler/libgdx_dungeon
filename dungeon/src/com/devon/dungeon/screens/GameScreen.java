@@ -75,11 +75,8 @@ public class GameScreen extends AbstractScreen
 		this.camera.setToOrtho(true, w, h);
 		this.stage.setCamera(this.camera);
 		
-
-
 		this.input = new InputHandler(this.camera);
 		Gdx.input.setInputProcessor(this.input);
-
 
 		dungeon = new Dungeon(DungeonGenerator.generateDungeonMap());
 
@@ -88,10 +85,8 @@ public class GameScreen extends AbstractScreen
 		this.player = new Player(dungeon);
 		this.stage.addActor(this.player);
 		
-		camera.position.set(0f, 0f, 0f);
-		
-		
-		
+		camera.position.set(player.getX(), player.getY(), 0f);
+			
 	}
 
 	@Override

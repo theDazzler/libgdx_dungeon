@@ -17,17 +17,17 @@ public class Player extends Actor
 	{
 		this.dungeon = dungeon;
 		this.texture = new TextureRegion(new Texture(Graphics.SPRITES_GFX_LOCATION), 0, 0, Tile.WIDTH, Tile.HEIGHT * 2);
-		//this.setPosition(1000, 1000);
-		//this.findStartLocation();
+		this.findStartLocation();
+		this.setBounds(this.getX(), this.getY(), Tile.WIDTH, Tile.HEIGHT);
 	}
 	
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha)
 	{
 		batch.draw(this.texture, this.getX(), this.getY());
-
 	}
 	
+	//place player in random room
 	public void findStartLocation()
 	{
 		Random rand = new Random();
@@ -40,8 +40,9 @@ public class Player extends Actor
 		
 		
 		
-		while(dungeon.getMap()[xIndex][yIndex] == 0);
+		while(dungeon.getMap()[xIndex][yIndex] != Tile.floor.getId());
 		
-		this.setPosition(xIndex * Tile.HEIGHT, yIndex * Tile.HEIGHT);
+		this.setPosition(xIndex * Tile.HEIGHT, yIndex * Tile.WIDTH);
+		
 	}
 }

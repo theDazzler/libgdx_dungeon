@@ -9,6 +9,10 @@ public class InputHandler implements InputProcessor
 {
 
 	OrthographicCamera camera;
+	private int mouseMoveCameraMargin = 50;//if user's mouse is within this many pixels from edge of screen, move screen in that direction 
+	private int cameraMovementSpeed = 51;
+	
+	boolean mouseInEdge = false;
 	
 	public InputHandler(OrthographicCamera camera) 
 	{
@@ -16,25 +20,9 @@ public class InputHandler implements InputProcessor
 	}
 
 	@Override
-	public boolean keyDown(int keycode) {
-		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            	camera.translate(-64, 0, 0);
-    }
-    if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            
-            	camera.translate(64, 0, 0);
-    }
-    if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-           
-            	camera.translate(0, 64, 0);
-    }
-    if(Gdx.input.isKeyPressed(Input.Keys.UP))
-    {
-            
-            	camera.translate(0, -64, 0);
-    }
-    
-    return true;
+	public boolean keyDown(int keycode) 
+	{
+		return false;
     
 	}
 
@@ -72,14 +60,73 @@ public class InputHandler implements InputProcessor
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) 
 	{
-		// TODO Auto-generated method stub
-		return false;
+		//scroll right edge
+		if(screenX > Gdx.graphics.getWidth() - this.mouseMoveCameraMargin)
+		{
+			mouseInEdge = true;
+			this.scrollScreenRight(screenX, screenY);		
+		}
+		//scroll left edge
+		else if(screenX < this.mouseMoveCameraMargin)
+		{
+			mouseInEdge = true;
+			this.scrollScreenLeft(screenX, screenY);		
+		}
+		
+		//scroll bottom edge
+		else if(screenY > Gdx.graphics.getHeight() - this.mouseMoveCameraMargin)
+		{
+			mouseInEdge = true;
+			this.scrollScreenBottom(screenX, screenY);		
+		}
+		
+		//scroll top edge
+		else if(screenY < this.mouseMoveCameraMargin)
+		{
+			mouseInEdge = true;
+			this.scrollScreenTop(screenX, screenY);		
+		}
+		
+		else
+			mouseInEdge = false;
+		return true;
+	}
+
+	private void scrollScreenTop(int screenX, int screenY)
+	{
+		int pixelsFromEdge = screenY;
+		camera.translate(0, (this.cameraMovementSpeed - pixelsFromEdge) * -1, 0);
+	}
+
+	private void scrollScreenBottom(int screenX, int screenY)
+	{
+		int pixelsFromEdge = Gdx.graphics.getHeight() - screenY;
+		camera.translate(0, this.cameraMovementSpeed - pixelsFromEdge, 0);
+	}
+
+	private void scrollScreenLeft(int screenX, int screenY) 
+	{
+		
+		int pixelsFromEdge = Gdx.input.getX();
+		System.out.println("EDGE:" + pixelsFromEdge);
+		camera.translate((this.cameraMovementSpeed - pixelsFromEdge) * -1, 0, 0);
+		
 	}
 
 	@Override
 	public boolean scrolled(int amount) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	
+	//xDirection = 1 for right and -1 for left. 0 for no movement
+	private void scrollScreenRight(int screenX, int screenY)
+	{		
+		int pixelsFromEdge = Gdx.graphics.getWidth() - Gdx.input.getX();
+
+		camera.translate(this.cameraMovementSpeed - pixelsFromEdge, 0, 0);
+
 	}
 
 	
