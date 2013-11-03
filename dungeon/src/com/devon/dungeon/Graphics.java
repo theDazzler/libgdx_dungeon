@@ -12,7 +12,7 @@ public class Graphics
 	public static final Texture TILES_TEXTURE = new Texture(Gdx.files.internal(TILES_GFX_LOCATION));
 	
 	//holds tile images ([0][0] is top left image of spritesheet)
-	public static TextureRegion[][] tiles = TextureRegion.split(TILES_TEXTURE, Tile.WIDTH, Tile.HEIGHT);
+	//public static TextureRegion[][] tiles = TextureRegion.split(TILES_TEXTURE, Tile.WIDTH, Tile.HEIGHT);
 
 
 }
