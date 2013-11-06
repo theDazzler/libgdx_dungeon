@@ -1,29 +1,29 @@
 package com.devon.dungeon.screens;
 
+import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.MapLayers;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.devon.dungeon.Dungeon;
 import com.devon.dungeon.DungeonGenerator;
 import com.devon.dungeon.InputHandler;
 import com.devon.dungeon.MyGdxGame;
-import com.devon.dungeon.Player;
+import com.devon.dungeon.Character;
+import com.devon.dungeon.tiles.Tile;
 import com.devon.dungeon.ui.PlayerActionMenu;
+import com.devon.pathfinding.DFS;
+import com.devon.pathfinding.Node;
 
 public class GameScreen extends AbstractScreen
 {
 	private Dungeon dungeon;
-	private TiledMapRenderer renderer;
+	private OrthogonalTiledMapRenderer renderer;
 	private OrthographicCamera camera;
-	public Player player;
+	public Character player;
 	private InputHandler input;
 	private PlayerActionMenu actionMenu;
 	private InputMultiplexer inputMultiplexor;
@@ -39,13 +39,9 @@ public class GameScreen extends AbstractScreen
 	{
 		super.render(delta);
 		camera.update();
-		
-		
-		/*
-		Gdx.gl.glClearColor(100f / 255f, 100f / 255f, 250f / 255f, 1f);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		camera.update();*/
+
 		renderer.setView(camera);
+		
 		//render tiles
 		renderer.render();
 	
@@ -55,7 +51,7 @@ public class GameScreen extends AbstractScreen
 		font.draw(batch, "Stage:" + this.stage.getCamera().position, 10, 80);
 		batch.end();
 		
-		//update and render stage actors
+		//update and render stage actors(UI/players/AI/objects)
 		stage.act(delta);
         stage.draw();
         
@@ -95,7 +91,7 @@ public class GameScreen extends AbstractScreen
 
 		renderer = new OrthogonalTiledMapRenderer(dungeon);
 		
-		this.player = new Player(dungeon);
+		this.player = new Character(dungeon);
 		this.stage.addActor(this.player);
 		this.stage.addActor(actionMenu);
 		
@@ -103,8 +99,8 @@ public class GameScreen extends AbstractScreen
 		this.inputMultiplexor.addProcessor(input);
 		Gdx.input.setInputProcessor(this.inputMultiplexor);
 		
-		//camera.position.set(player.getX(), player.getY(), 0f);
-		camera.position.set(0,0, 0);
+		camera.position.set(player.getX(), player.getY(), 0f);
+		//camera.position.set(0,0, 0);
 			
 	}
 
@@ -133,6 +129,36 @@ public class GameScreen extends AbstractScreen
 	public void dispose() 
 	{
 		// TODO Auto-generated method stub
+		
+	}
+
+	public void showAvailableMoves() 
+	{
+		System.out.println("showing available moves");
+
+		//int[][] tempMap = new int[this.dungeon.getWidth()][this.dungeon.getHeight()];
+
+		//get reachable tiles
+		ArrayList<Node> reachableTiles = DFS.findReachableTiles(this.dungeon.getMap(), player.getXIndex(), player.getYIndex(), this.player.getSpeed());
+		MapLayers layers = this.dungeon.getLayers();
+		TiledMapTileLayer UILayer = new TiledMapTileLayer(this.dungeon.getWidth(), this.dungeon.getHeight(), Tile.WIDTH, Tile.HEIGHT);
+		
+		//for each reachable tile
+		for(int i = 0; i < reachableTiles.size(); i++)
+		{		
+			System.out.println("setting reachable tiles...");
+			Node tile = reachableTiles.get(i);
+			
+			//make sure tile is walkable
+			if(this.dungeon.getMap()[tile.getX()][tile.getY()] == Tile.floor.getId())
+			{
+				Cell cell = new Cell();
+				cell.setTile(Tile.door);
+				UILayer.setCell(tile.getX(), tile.getY(), cell);
+			}			
+		}
+		
+		layers.add(UILayer);
 		
 	}
 	

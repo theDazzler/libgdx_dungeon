@@ -15,14 +15,6 @@ import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
  */
 public abstract class Tile extends StaticTiledMapTile
 {
-	public Tile(int id, TextureRegion textureRegion)
-	{
-		super(textureRegion);
-		this.textureRegion = textureRegion;
-		this.id = id;
-		// TODO Auto-generated constructor stub
-	}
-
 	public static final int WIDTH = 64;
 	public static final int HEIGHT= 64;
 	public static Tile[] tiles = new Tile[256]; //holds all tile types
@@ -36,8 +28,16 @@ public abstract class Tile extends StaticTiledMapTile
 	private BlendMode blendMode = BlendMode.ALPHA;   
 	private MapProperties properties;   
 	private TextureRegion textureRegion; 
+	private boolean isReachable;
 
-
+	public Tile(int id, TextureRegion textureRegion)
+	{
+		super(textureRegion);
+		this.textureRegion = textureRegion;
+		this.id = id;
+		this.isReachable = false;
+		// TODO Auto-generated constructor stub
+	}
 	
 	
 	/*
@@ -56,6 +56,16 @@ public abstract class Tile extends StaticTiledMapTile
 			return Tile.door;
 		else
 			return null;
+	}
+	
+	public void setIsReachable(boolean value)
+	{
+		this.isReachable = value;
+	}
+	
+	public boolean isReachable()
+	{
+		return this.isReachable;
 	}
 	
 	@Override
@@ -95,6 +105,8 @@ public abstract class Tile extends StaticTiledMapTile
 	{
 		return this.properties;
 	}
+	
+	
 
 	
 

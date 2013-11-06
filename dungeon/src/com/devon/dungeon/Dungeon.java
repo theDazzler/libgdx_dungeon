@@ -83,6 +83,8 @@ public class Dungeon extends TiledMap
 				{
 					cell.setTile(Tile.floor);
 					this.tileLayer.setCell(x, y, cell);
+					
+
 				}
 				else if(tileType == Tile.door.getId())
 				{
@@ -98,7 +100,7 @@ public class Dungeon extends TiledMap
 			}
 		}
 		
-		layers.add(tileLayer);
+		layers.add(this.tileLayer);
 
 	}
 

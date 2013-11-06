@@ -7,14 +7,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.devon.dungeon.tiles.Tile;
+import com.devon.pathfinding.DFS;
 
-public class Player extends Actor
+public class Character extends Entity
 {
 	private TextureRegion texture;
 	private Dungeon dungeon;
 	private int speed = 5;
 	
-	public Player(Dungeon dungeon)
+	public Character(Dungeon dungeon)
 	{
 		this.dungeon = dungeon;
 		this.texture = new TextureRegion(new Texture(Graphics.SPRITES_GFX_LOCATION), 0, 0, Tile.WIDTH, Tile.HEIGHT * 2);
@@ -46,10 +47,22 @@ public class Player extends Actor
 		this.setPosition(xIndex * Tile.HEIGHT, yIndex * Tile.WIDTH);
 		
 	}
-
-	public void showAvailableMoves() 
+	
+	public int getXIndex()
 	{
-		System.out.println("showing available moves");
-		
+		return (int) (this.getX() / Tile.WIDTH);
 	}
+	
+	public int getYIndex()
+	{
+		return (int) (this.getY() / Tile.HEIGHT);
+	}
+
+	public int getSpeed() 
+	{
+		return this.speed;
+	}
+
+	
+	
 }

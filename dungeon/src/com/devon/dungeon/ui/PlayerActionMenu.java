@@ -62,7 +62,7 @@ public class PlayerActionMenu extends Table
 	
 	public void onMoveButtonClicked()
 	{
-		this.gameScreen.player.showAvailableMoves();
+		this.gameScreen.showAvailableMoves();
 	}
 	
 	@Override
@@ -71,5 +71,7 @@ public class PlayerActionMenu extends Table
 		Stage stage = this.getStage();
 		this.setPosition(stage.getCamera().position.x + ((stage.getWidth() / 2) - (this.getWidth())), stage.getCamera().position.y + 25);
 	}
+	
+	
 
 }
