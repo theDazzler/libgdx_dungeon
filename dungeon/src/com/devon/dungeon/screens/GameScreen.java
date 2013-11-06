@@ -1,6 +1,7 @@
 package com.devon.dungeon.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL10;
@@ -15,14 +16,17 @@ import com.devon.dungeon.DungeonGenerator;
 import com.devon.dungeon.InputHandler;
 import com.devon.dungeon.MyGdxGame;
 import com.devon.dungeon.Player;
+import com.devon.dungeon.ui.PlayerActionMenu;
 
 public class GameScreen extends AbstractScreen
 {
 	private Dungeon dungeon;
 	private TiledMapRenderer renderer;
 	private OrthographicCamera camera;
-	private Player player;
+	public Player player;
 	private InputHandler input;
+	private PlayerActionMenu actionMenu;
+	private InputMultiplexer inputMultiplexor;
 	
 	public GameScreen(MyGdxGame game) 
 	{
@@ -35,6 +39,8 @@ public class GameScreen extends AbstractScreen
 	{
 		super.render(delta);
 		camera.update();
+		
+		
 		/*
 		Gdx.gl.glClearColor(100f / 255f, 100f / 255f, 250f / 255f, 1f);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
@@ -70,14 +76,20 @@ public class GameScreen extends AbstractScreen
 		//Gdx.graphics.setDisplayMode(1700, 960, false);
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
+		
+		this.inputMultiplexor = new InputMultiplexer();
+	
+		
+		this.actionMenu = new PlayerActionMenu(this);
+		
 
 		this.camera = new OrthographicCamera(w, h);
 		
-		this.camera.setToOrtho(true, w, h);
+		this.camera.setToOrtho(false, w, h);
 		this.stage.setCamera(this.camera);
 		
 		this.input = new InputHandler(this.camera);
-		Gdx.input.setInputProcessor(this.input);
+		//Gdx.input.setInputProcessor(this.input);
 
 		dungeon = new Dungeon(DungeonGenerator.generateDungeonMap());
 
@@ -85,8 +97,14 @@ public class GameScreen extends AbstractScreen
 		
 		this.player = new Player(dungeon);
 		this.stage.addActor(this.player);
+		this.stage.addActor(actionMenu);
 		
-		camera.position.set(player.getX(), player.getY(), 0f);
+		this.inputMultiplexor.addProcessor(stage);
+		this.inputMultiplexor.addProcessor(input);
+		Gdx.input.setInputProcessor(this.inputMultiplexor);
+		
+		//camera.position.set(player.getX(), player.getY(), 0f);
+		camera.position.set(0,0, 0);
 			
 	}
 

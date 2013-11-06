@@ -12,6 +12,7 @@ public class Player extends Actor
 {
 	private TextureRegion texture;
 	private Dungeon dungeon;
+	private int speed = 5;
 	
 	public Player(Dungeon dungeon)
 	{
@@ -43,6 +44,12 @@ public class Player extends Actor
 		while(dungeon.getMap()[xIndex][yIndex] != Tile.floor.getId());
 		
 		this.setPosition(xIndex * Tile.HEIGHT, yIndex * Tile.WIDTH);
+		
+	}
+
+	public void showAvailableMoves() 
+	{
+		System.out.println("showing available moves");
 		
 	}
 }

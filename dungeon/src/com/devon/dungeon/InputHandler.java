@@ -76,6 +76,7 @@ public class InputHandler implements InputProcessor
 		//scroll bottom edge
 		else if(screenY > Gdx.graphics.getHeight() - this.mouseMoveCameraMargin)
 		{
+			System.out.println("XXZXZZX:" + screenY);
 			mouseInEdge = true;
 			this.scrollScreenBottom(screenX, screenY);		
 		}
@@ -95,13 +96,13 @@ public class InputHandler implements InputProcessor
 	private void scrollScreenTop(int screenX, int screenY)
 	{
 		int pixelsFromEdge = screenY;
-		camera.translate(0, (this.cameraMovementSpeed - pixelsFromEdge) * -1, 0);
+		camera.translate(0, this.cameraMovementSpeed - pixelsFromEdge, 0);
 	}
 
 	private void scrollScreenBottom(int screenX, int screenY)
 	{
 		int pixelsFromEdge = Gdx.graphics.getHeight() - screenY;
-		camera.translate(0, this.cameraMovementSpeed - pixelsFromEdge, 0);
+		camera.translate(0, (this.cameraMovementSpeed - pixelsFromEdge) * -1, 0);
 	}
 
 	private void scrollScreenLeft(int screenX, int screenY) 

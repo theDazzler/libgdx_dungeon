@@ -20,7 +20,7 @@ public class AbstractScreen implements Screen
     	this.game = game;
     	this.font = new BitmapFont();
     	this.batch = new SpriteBatch();
-    	this.stage = new Stage(0, 0, true);
+    	this.stage = new Stage();
     }
 
 	@Override
