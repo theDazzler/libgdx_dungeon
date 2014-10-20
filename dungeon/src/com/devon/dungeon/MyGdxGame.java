@@ -19,17 +19,20 @@ package com.devon.dungeon;
 
 import com.badlogic.gdx.Game;
 import com.devon.dungeon.screens.GameScreen;
+import com.devon.dungeon.screens.MainMenuScreen;
 
 public class MyGdxGame extends Game 
 {
+	private MainMenuScreen mainMenuScreen;
 	private GameScreen gameScreen;
 	
 	
 	@Override
 	public void create() 
 	{		
-		this.gameScreen = new GameScreen(this);
-		this.setScreen(this.gameScreen);
+		//this.gameScreen = new GameScreen(this);
+		this.mainMenuScreen = new MainMenuScreen(this);
+		this.setScreen(this.mainMenuScreen);
 
 	}
 

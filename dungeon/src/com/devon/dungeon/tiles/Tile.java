@@ -23,6 +23,7 @@ public abstract class Tile extends StaticTiledMapTile
 	public static Tile floor = new FloorTile(1, 0, 0);
 	public static Tile door = new DoorTile(2, 0, 1);
 	public static Tile corridor = new CorridorTile(3, 0, 2);
+	public static Tile UIMovementCandiate = new UIMovementCandidateTile(4, 0, 3);
 	
 	private int id;
 	private BlendMode blendMode = BlendMode.ALPHA;   
