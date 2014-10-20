@@ -14,9 +14,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.devon.dungeon.MyGdxGame;
 import com.devon.dungeon.screens.GameScreen;
+import com.devon.dungeon.Character;
 
 public class PlayerActionMenu extends Table
 {
+	private Character player;
 	private TextureAtlas atlas;
 	private Skin skin;
 	//private Table table;
@@ -26,9 +28,10 @@ public class PlayerActionMenu extends Table
 	private GameScreen gameScreen;
 
 	
-	public PlayerActionMenu(GameScreen gameScreen)
+	public PlayerActionMenu(GameScreen gameScreen, Character player)
 	{
 		this.gameScreen = gameScreen;
+		this.player = player;
 		this.setBounds(0, 0, 200, 200);
 		this.atlas = new TextureAtlas("data/ui/ui.pack");
 		this.font = new BitmapFont();
@@ -62,7 +65,7 @@ public class PlayerActionMenu extends Table
 	
 	public void onMoveButtonClicked()
 	{
-		this.gameScreen.showAvailableMoves();
+		this.player.showAvailableMoves();
 	}
 	
 	@Override

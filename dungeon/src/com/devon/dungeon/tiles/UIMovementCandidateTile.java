@@ -8,6 +8,6 @@ public class UIMovementCandidateTile extends Tile
 {
 	public UIMovementCandidateTile(int id, int xIndex, int yIndex)
 	{
-		super(id, new TextureRegion(new Texture(Gdx.files.internal("data/tiles/movement.png"))));
+		super(id, new TextureRegion(new Texture(Gdx.files.internal("data/tiles/ui_available_movement.png"))));
 	}
 }

@@ -23,7 +23,7 @@ public class GameScreen extends AbstractScreen
 	private Dungeon dungeon;
 	private OrthogonalTiledMapRenderer renderer;
 	private OrthographicCamera camera;
-	public Character player;
+	public  Character player;
 	private InputHandler input;
 	private PlayerActionMenu actionMenu;
 	private InputMultiplexer inputMultiplexor;
@@ -76,7 +76,7 @@ public class GameScreen extends AbstractScreen
 		this.inputMultiplexor = new InputMultiplexer();
 	
 		
-		this.actionMenu = new PlayerActionMenu(this);
+		
 		
 
 		this.camera = new OrthographicCamera(w, h);
@@ -92,6 +92,7 @@ public class GameScreen extends AbstractScreen
 		renderer = new OrthogonalTiledMapRenderer(dungeon);
 		
 		this.player = new Character(dungeon);
+		this.actionMenu = new PlayerActionMenu(this, this.player);
 		this.stage.addActor(this.player);
 		this.stage.addActor(actionMenu);
 		
@@ -132,34 +133,6 @@ public class GameScreen extends AbstractScreen
 		
 	}
 
-	public void showAvailableMoves() 
-	{
-		System.out.println("showing available moves");
-
-		//int[][] tempMap = new int[this.dungeon.getWidth()][this.dungeon.getHeight()];
-
-		//get reachable tiles
-		ArrayList<Node> reachableTiles = DFS.findReachableTiles(this.dungeon.getMap(), player.getXIndex(), player.getYIndex(), this.player.getSpeed());
-		MapLayers layers = this.dungeon.getLayers();
-		TiledMapTileLayer UILayer = new TiledMapTileLayer(this.dungeon.getWidth(), this.dungeon.getHeight(), Tile.WIDTH, Tile.HEIGHT);
-		
-		//for each reachable tile
-		for(int i = 0; i < reachableTiles.size(); i++)
-		{		
-			System.out.println("setting reachable tiles...");
-			Node tile = reachableTiles.get(i);
-			
-			//make sure tile is walkable
-			if(this.dungeon.getMap()[tile.getX()][tile.getY()] == Tile.floor.getId())
-			{
-				Cell cell = new Cell();
-				cell.setTile(Tile.door);
-				UILayer.setCell(tile.getX(), tile.getY(), cell);
-			}			
-		}
-		
-		layers.add(UILayer);
-		
-	}
+	
 	
 }
